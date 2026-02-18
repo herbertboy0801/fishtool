@@ -75,6 +75,48 @@ body {
   transition: transform 0.1s;
 }
 
+/* Page entrance stagger animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fade-in-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Card shine sweep */
+@keyframes card-shine {
+  0%   { transform: translateX(-120%) skewX(-20deg); }
+  100% { transform: translateX(300%) skewX(-20deg); }
+}
+
+.card-shine {
+  pointer-events: none;
+}
+
+.card-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 28%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.055),
+    transparent
+  );
+  animation: card-shine 5s ease-in-out infinite;
+}
+
 /* Hide scrollbar for horizontal scroll containers */
 .scrollbar-hide {
   -ms-overflow-style: none;
