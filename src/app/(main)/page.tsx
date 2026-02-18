@@ -58,25 +58,25 @@ const discoverTools = [
     border: "border-red-500/25",
   },
   {
+    href: "/violation-records",
+    icon: "📋",
+    label: "违规记录",
+    bg: "bg-red-400/15",
+    border: "border-red-400/25",
+  },
+  {
     href: "/calculator",
     icon: "💰",
-    label: "利润算",
+    label: "利润计算",
     bg: "bg-green-500/15",
     border: "border-green-500/25",
   },
   {
     href: "/image-tools",
     icon: "🖼️",
-    label: "图片",
+    label: "图片工具",
     bg: "bg-blue-500/15",
     border: "border-blue-500/25",
-  },
-  {
-    href: "/tools",
-    icon: "🔧",
-    label: "更多",
-    bg: "bg-purple-500/15",
-    border: "border-purple-500/25",
   },
 ];
 
