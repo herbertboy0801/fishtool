@@ -41,6 +41,13 @@ const cropRatios = [
   { label: "9:16", value: 9 / 16 },
 ];
 
+const TABS: { key: ToolTab; icon: string; label: string }[] = [
+  { key: "compress", icon: "📦", label: "压缩" },
+  { key: "crop",     icon: "✂️", label: "裁剪" },
+  { key: "enhance",  icon: "✨", label: "高清" },
+  { key: "filter",   icon: "🎨", label: "滤镜" },
+];
+
 export default function ImageToolsPage() {
   const [activeTab, setActiveTab] = useState<ToolTab>("compress");
   const [originalImage, setOriginalImage] = useState<HTMLImageElement | null>(null);
@@ -207,35 +214,41 @@ export default function ImageToolsPage() {
   }, [originalImage]);
 
   return (
-    <div>
-      <PageHeader title="图片工具箱" subtitle="压缩、裁剪、高清与滤镜处理" />
+    <div className="flex flex-col min-h-[calc(100dvh-0px)]">
+      <PageHeader title="图片处理" subtitle="一站式图片优化工具箱" />
 
-      <div className="space-y-4 px-4 py-4">
+      <div className="flex-1 space-y-4 px-4 py-4 pb-24">
         {/* Tab Switch */}
-        <TabBar
-          tabs={[
-            { key: "compress", label: "压缩" },
-            { key: "crop", label: "裁剪" },
-            { key: "enhance", label: "增强" },
-            { key: "filter", label: "滤镜" },
-          ]}
-          activeTab={activeTab}
-          onTabChange={(key) => {
-            setActiveTab(key as ToolTab);
-            if (originalImage) setPreviewUrl(originalImage.src);
-          }}
-        />
+        <div className="flex rounded-xl bg-card p-1 gap-1">
+          {TABS.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => {
+                setActiveTab(t.key);
+                if (originalImage) setPreviewUrl(originalImage.src);
+              }}
+              className={`flex-1 flex flex-col items-center gap-0.5 rounded-lg py-2 text-xs font-medium transition-all touch-feedback ${
+                activeTab === t.key
+                  ? "bg-primary text-black"
+                  : "text-muted"
+              }`}
+            >
+              <span className="text-base leading-none">{t.icon}</span>
+              <span>{t.label}</span>
+            </button>
+          ))}
+        </div>
 
         {/* Upload Area */}
         {!originalImage ? (
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border py-16 transition-colors hover:border-primary touch-feedback"
+            className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border py-14 transition-colors hover:border-primary touch-feedback"
           >
-            <span className="text-4xl">📷</span>
-            <p className="mt-3 text-sm text-muted">点击上传图片</p>
-            <p className="mt-1 text-xs text-muted/50">
-              支持 JPG/PNG/WebP，最大 10MB
+            <span className="text-5xl">📷</span>
+            <p className="mt-3 text-sm font-medium">点击或拖拽上传图片</p>
+            <p className="mt-1 text-xs text-muted/60">
+              支持 JPG、PNG、WebP 格式
             </p>
           </div>
         ) : (
@@ -302,31 +315,6 @@ export default function ImageToolsPage() {
               )}
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex gap-2">
-              <button
-                onClick={handleDownload}
-                className="flex-1 rounded-lg bg-primary py-2.5 text-sm font-semibold text-black transition-colors hover:bg-primary-hover touch-feedback"
-              >
-                下载图片
-              </button>
-              <button
-                onClick={handleReset}
-                className="rounded-lg border border-border px-4 py-2.5 text-sm text-muted transition-colors hover:bg-card-hover touch-feedback"
-              >
-                重置
-              </button>
-              <button
-                onClick={() => {
-                  setOriginalImage(null);
-                  setPreviewUrl(null);
-                  setProcessedSize(0);
-                }}
-                className="rounded-lg border border-border px-4 py-2.5 text-sm text-muted transition-colors hover:bg-card-hover touch-feedback"
-              >
-                换图
-              </button>
-            </div>
           </>
         )}
 
@@ -337,6 +325,24 @@ export default function ImageToolsPage() {
           onChange={handleFileUpload}
           className="hidden"
         />
+      </div>
+
+      {/* Fixed Bottom Bar */}
+      <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur-sm px-4 py-3 flex gap-3">
+        <button
+          onClick={handleReset}
+          disabled={!originalImage}
+          className="flex-1 rounded-xl border border-border py-3 text-sm font-medium text-muted transition-colors hover:bg-card-hover touch-feedback disabled:opacity-40"
+        >
+          🔄 重置
+        </button>
+        <button
+          onClick={handleDownload}
+          disabled={!previewUrl}
+          className="flex-1 rounded-xl bg-primary py-3 text-sm font-semibold text-black transition-colors hover:bg-primary-hover touch-feedback disabled:opacity-40"
+        >
+          ⬇️ 下载
+        </button>
       </div>
     </div>
   );

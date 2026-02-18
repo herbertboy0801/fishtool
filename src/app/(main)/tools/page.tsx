@@ -140,14 +140,21 @@ const categories: ToolCategory[] = [
         emoji: "💰",
         color: "bg-green-500",
         label: "利润计算器",
-        description: "快速核算单品利润和利润率",
+        description: "快速计算商品利润，精准定价",
       },
       {
         href: "/image-tools",
         emoji: "🖼️",
         color: "bg-blue-500",
-        label: "图片工具箱",
-        description: "压缩、裁剪、高清与加字处理",
+        label: "图片处理",
+        description: "压缩、裁剪、高清与滤镜处理",
+      },
+      {
+        href: "/operation-log",
+        emoji: "📒",
+        color: "bg-slate-500",
+        label: "操作日志",
+        description: "记录每日运营与动作复盘",
       },
     ],
   },
@@ -157,7 +164,7 @@ export default function ToolsPage() {
   return (
     <div className="px-4 pt-6">
       <h1 className="mb-1 text-xl font-bold">运营工具</h1>
-      <p className="mb-6 text-xs text-muted">14款工具助力闲鱼运营</p>
+      <p className="mb-6 text-xs text-muted">15款工具助力闲鱼运营</p>
 
       <div className="space-y-6">
         {categories.map((category) => (
