@@ -46,6 +46,35 @@ ${samples.map((s, i) => `【${i + 1}】${s}`).join("\n\n")}`;
 请给出专业、实用的闲鱼运营建议，控制在150字以内。`;
     }
 
+    case "image-creative": {
+      const categoryText = params.category ? `商品类目：${params.category}` : "";
+      const nameText = params.productName ? `商品名称：${params.productName}` : "";
+      const pointsText = params.points
+        ? `核心卖点：${(params.points as string[]).join("、")}`
+        : "";
+      return `你是一位专业的闲鱼商品摄影顾问。根据以下商品信息，给出详细的主图拍摄方案。
+
+${categoryText}
+${nameText}
+${pointsText}
+
+请输出以下内容（使用Markdown格式）：
+## 拍摄角度建议
+（3-4个必拍角度，说明拍摄要点）
+
+## 背景与布景
+（推荐背景颜色/道具，说明原因）
+
+## 光线与构图
+（拍摄时间/灯光建议）
+
+## 主图文字标注
+（建议在图片上标注的关键信息）
+
+## 快速提升点击率技巧
+（2-3条简单可执行的技巧）`;
+    }
+
     case "smart-reply": {
       const scenarioMap: Record<string, string> = {
         砍价应对: "买家正在砍价，需要婉拒同时保留成交可能",

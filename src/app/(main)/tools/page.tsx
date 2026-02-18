@@ -57,7 +57,6 @@ const categories: ToolCategory[] = [
         color: "bg-purple-500",
         label: "关键词优化",
         description: "分析爆款文案提取关键词",
-        disabled: true,
       },
       {
         href: "/image-creative",
@@ -65,7 +64,6 @@ const categories: ToolCategory[] = [
         color: "bg-pink-500",
         label: "图片创意方案",
         description: "AI分析同行图片，生成拍摄优化建议",
-        disabled: true,
       },
       {
         href: "/smart-reply",
@@ -73,7 +71,6 @@ const categories: ToolCategory[] = [
         color: "bg-cyan-500",
         label: "智能话术助手",
         description: "AI模拟卖家回复买家咨询",
-        disabled: true,
       },
       {
         href: "/qa-assistant",
@@ -82,7 +79,6 @@ const categories: ToolCategory[] = [
         label: "答疑助手",
         description: "闲鱼运营问题随时问",
         badge: "Hot",
-        disabled: true,
       },
     ],
   },
@@ -97,7 +93,6 @@ const categories: ToolCategory[] = [
         label: "爆款打造",
         description: "数据驱动的商品运营工具",
         badge: "New",
-        disabled: true,
       },
       {
         href: "/competitor-analytics",
@@ -105,7 +100,6 @@ const categories: ToolCategory[] = [
         color: "bg-teal-500",
         label: "同行监控",
         description: "追踪竞品数据与策略",
-        disabled: true,
       },
     ],
   },
@@ -119,7 +113,6 @@ const categories: ToolCategory[] = [
         color: "bg-emerald-500",
         label: "运营宝库",
         description: "精选干货与选品内容合集",
-        disabled: true,
       },
       {
         href: "/user-sharing",
@@ -127,7 +120,6 @@ const categories: ToolCategory[] = [
         color: "bg-lime-500",
         label: "用户分享",
         description: "社区回答和经验分享",
-        disabled: true,
       },
     ],
   },
@@ -164,7 +156,7 @@ export default function ToolsPage() {
   return (
     <div className="px-4 pt-6">
       <h1 className="mb-1 text-xl font-bold">运营工具</h1>
-      <p className="mb-6 text-xs text-muted">15款工具助力闲鱼运营</p>
+      <p className="mb-6 text-xs text-muted">15 款工具全面助力闲鱼运营</p>
 
       <div className="space-y-6">
         {categories.map((category) => (
