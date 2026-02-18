@@ -4,64 +4,59 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { useAuth } from "@/lib/auth";
 
-// 每日运营小技巧（按日期轮播）
-const tips = [
-  { icon: "📌", title: "标题前5字最重要", desc: "把核心卖点放在最前面" },
-  { icon: "⏰", title: "下午3-6点是黄金发布期", desc: "用户活跃度最高，曝光更多" },
-  { icon: "📸", title: "主图用白底纯净背景", desc: "点击率提升30%以上" },
-  { icon: "💬", title: "15分钟内回复买家", desc: "提升成交率和好评率" },
-  { icon: "🏷️", title: "价格定尾数9或8", desc: "心理定价策略，更易成交" },
-  { icon: "🔄", title: "每3天刷新一次商品", desc: "保持搜索排名和曝光量" },
-  { icon: "🚫", title: "发布前必检违禁词", desc: "避免被限流或下架风险" },
-  { icon: "📦", title: "描述中写清楚品牌和规格", desc: "减少买家询问，提高效率" },
-  { icon: "⭐", title: "积累好评是核心资产", desc: "好评越多，排名越靠前" },
-  { icon: "🎁", title: "捆绑赠品提升竞争力", desc: "同类商品中更容易被选中" },
+// 公告/运营技巧列表（模拟上下滑动）
+const announcements = [
+  { icon: "📌", text: "标题前5个字最重要" },
+  { icon: "🐟", text: "下午4-6点发布曝光高" },
+  { icon: "📸", text: "主图用白底背景点击率更高" },
+  { icon: "🔄", text: "每3天刷新商品保持排名" },
+  { icon: "💬", text: "15分钟内回复买家提升成交率" },
+  { icon: "🏷️", text: "价格尾数定9比整数成交率高" },
+  { icon: "⭐", text: "好评数量直接影响搜索排名" },
 ];
 
-interface QuickTool {
-  href: string;
-  icon: string;
-  label: string;
-  desc: string;
-  bg: string;
-  iconBg: string;
-  disabled?: boolean;
-}
-
-// 首页常用工具（2×2 大卡片）
-const quickTools: QuickTool[] = [
-  {
-    href: "/forbidden-words",
-    icon: "🚫",
-    label: "违禁词检测",
-    desc: "规避限流风险",
-    bg: "bg-red-500/20",
-    iconBg: "bg-red-500",
-  },
+// 核心工具（2×2 深色渐变大卡片）
+const coreTools = [
   {
     href: "/copywriting",
     icon: "✍️",
-    label: "AI文案生成",
-    desc: "AI智能优化",
-    bg: "bg-orange-500/20",
-    iconBg: "bg-orange-500",
+    label: "文案生成",
+    desc: "AI 智能生成标题描述",
+    gradient: "from-[#3d2b1f] to-[#5c3a20]",
+    disabled: false,
   },
   {
-    href: "/calculator",
-    icon: "💰",
-    label: "利润计算",
-    desc: "精准核算利润",
-    bg: "bg-green-500/20",
-    iconBg: "bg-green-500",
+    href: "/qa-assistant",
+    icon: "🤖",
+    label: "答疑 AI",
+    desc: "闲鱼运营问题随时问",
+    gradient: "from-[#1a1a3e] to-[#2d2060]",
+    disabled: true,
   },
   {
-    href: "/image-tools",
-    icon: "🖼️",
-    label: "图片工具箱",
-    desc: "压缩裁剪增强",
-    bg: "bg-blue-500/20",
-    iconBg: "bg-blue-500",
+    href: "/smart-reply",
+    icon: "💬",
+    label: "话术助手",
+    desc: "AI 模拟卖家回复",
+    gradient: "from-[#1a3028] to-[#0f4a35]",
+    disabled: true,
   },
+  {
+    href: "/boom",
+    icon: "🚀",
+    label: "爆款打造",
+    desc: "数据驱动商品运营",
+    gradient: "from-[#3a1a1a] to-[#5c2020]",
+    disabled: true,
+  },
+];
+
+// 发现更多（底部小图标）
+const discoverTools = [
+  { href: "/forbidden-words", icon: "🚫", label: "违禁词" },
+  { href: "/calculator",      icon: "💰", label: "利润算" },
+  { href: "/image-tools",     icon: "🖼️", label: "图片" },
+  { href: "/tools",           icon: "🤖", label: "更多" },
 ];
 
 export default function HomePage() {
@@ -76,103 +71,93 @@ export default function HomePage() {
     return "晚上好";
   }, []);
 
-  // 今日展示的技巧（按日期轮转）
-  const todayTips = useMemo(() => {
-    const day = new Date().getDate();
-    const startIdx = day % tips.length;
-    return [...tips.slice(startIdx), ...tips.slice(0, startIdx)].slice(0, 5);
-  }, []);
-
   return (
-    <div className="px-4 pt-6 pb-4">
+    <div className="flex min-h-[calc(100dvh-56px)] flex-col px-4 pt-5 pb-4">
       {/* Header */}
       <div className="mb-5">
         <p className="text-sm text-muted">
-          {greeting}
-          {phone && `，${phone.slice(0, 3)}****${phone.slice(7)}`}
+          Hey {phone ? `${phone.slice(0, 3)}****${phone.slice(7)}` : "👋"}
         </p>
-        <h1 className="mt-0.5 text-xl font-bold">闲鱼运营助手</h1>
-        <p className="mt-0.5 text-xs text-muted">让运营更简单高效</p>
+        <h1 className="mt-0.5 text-2xl font-bold">闲鱼运营助手</h1>
+        <p className="mt-0.5 text-xs text-muted">让闲鱼运营更简单</p>
       </div>
 
-      {/* 运营小技巧（横向滚动） */}
-      <div className="mb-6">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-muted flex items-center gap-1">
-            💡 运营小技巧
-          </h2>
-          <span className="text-xs text-muted rounded-full bg-primary/10 px-2 py-0.5 text-primary">
-            每日更新
+      {/* 公告区 — 上下滑动列表 */}
+      <div className="mb-5 rounded-xl bg-card overflow-hidden">
+        <div className="flex items-center gap-2 border-b border-border px-3 py-2">
+          <span className="rounded bg-primary px-1.5 py-0.5 text-[10px] font-semibold text-black">
+            公告
           </span>
+          <span className="text-xs text-muted">上下滑动</span>
         </div>
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-          {todayTips.map((tip, idx) => (
-            <div
-              key={idx}
-              className="flex-shrink-0 w-44 rounded-xl bg-card p-3 border border-border"
-            >
-              <span className="text-xl">{tip.icon}</span>
-              <p className="mt-1.5 text-xs font-semibold leading-tight">{tip.title}</p>
-              <p className="mt-1 text-xs text-muted leading-tight">{tip.desc}</p>
+        <div className="max-h-24 overflow-y-auto scrollbar-hide divide-y divide-border">
+          {announcements.map((a, i) => (
+            <div key={i} className="flex items-center justify-between px-3 py-2.5">
+              <div className="flex items-center gap-2 text-xs">
+                <span>{a.icon}</span>
+                <span>{a.text}</span>
+              </div>
+              <span className="text-[10px] text-muted flex-shrink-0 ml-2">
+                {i === 0 ? "今天" : `${i * 2}小时前`}
+              </span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* 常用工具（2×2 大卡片） */}
-      <div className="mb-6">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-muted flex items-center gap-1">
-            🔥 常用工具
-          </h2>
-          <Link href="/tools" className="text-xs text-primary">
-            全部工具 ›
-          </Link>
-        </div>
+      {/* 核心工具 2×2 */}
+      <div className="mb-5">
+        <p className="mb-3 text-sm font-semibold">核心工具</p>
         <div className="grid grid-cols-2 gap-3">
-          {quickTools.map((tool) => {
-            const inner = (
+          {coreTools.map((tool) => {
+            const card = (
               <div
-                className={`relative rounded-2xl p-4 ${tool.bg} ${
-                  tool.disabled ? "opacity-60" : "active:scale-95 transition-transform"
+                className={`relative h-28 rounded-2xl bg-gradient-to-br ${tool.gradient} p-4 ${
+                  tool.disabled ? "opacity-70" : "active:scale-95 transition-transform"
                 }`}
               >
                 {tool.disabled && (
-                  <span className="absolute right-3 top-3 rounded-full bg-border px-1.5 py-0.5 text-[9px] text-muted">
+                  <span className="absolute right-3 top-3 rounded-full bg-white/10 px-1.5 py-0.5 text-[9px] text-white/60">
                     即将上线
                   </span>
                 )}
-                <div
-                  className={`mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl ${tool.iconBg} text-white text-xl shadow-lg`}
-                >
-                  {tool.icon}
-                </div>
-                <p className="text-sm font-semibold">{tool.label}</p>
-                <p className="mt-0.5 text-xs text-muted">{tool.desc}</p>
+                <span className="text-2xl">{tool.icon}</span>
+                <p className="mt-2 text-sm font-semibold text-white">{tool.label}</p>
+                <p className="mt-0.5 text-xs text-white/60">{tool.desc}</p>
               </div>
             );
 
             return tool.disabled ? (
-              <div key={tool.href}>{inner}</div>
+              <div key={tool.href}>{card}</div>
             ) : (
-              <Link key={tool.href} href={tool.href}>
-                {inner}
-              </Link>
+              <Link key={tool.href} href={tool.href}>{card}</Link>
             );
           })}
         </div>
       </div>
 
-      {/* 新手提示 */}
-      <div className="rounded-xl bg-card p-4 border border-border">
-        <p className="mb-3 text-xs font-semibold text-muted flex items-center gap-1">
-          💡 新手提示
-        </p>
-        <p className="text-xs text-muted leading-relaxed">
-          建议先使用「<span className="text-foreground font-medium">违禁词检测</span>」检查文案安全性，
-          再用「<span className="text-foreground font-medium">AI文案生成</span>」优化商品描述，
-          最后用「<span className="text-foreground font-medium">利润计算</span>」精准定价。
-        </p>
+      {/* 发现更多 */}
+      <div className="mb-6">
+        <p className="mb-3 text-sm font-semibold">发现更多</p>
+        <div className="flex justify-around">
+          {discoverTools.map((t) => (
+            <Link
+              key={t.href}
+              href={t.href}
+              className="flex flex-col items-center gap-1.5 touch-feedback"
+            >
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-card text-2xl border border-border">
+                {t.icon}
+              </div>
+              <span className="text-xs text-muted">{t.label}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="mt-auto pt-2 text-center">
+        <p className="text-xs text-muted/40">张老板团队 · 闲鱼实战派</p>
       </div>
     </div>
   );
